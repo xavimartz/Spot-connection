@@ -19,12 +19,13 @@ exports.logout = (req, res, next) => {
 exports.showProfile = (req, res, next) => {
   const { id } = req.params
   const user = User.findById(id)
-    .then((user) => res.status(200).json({ user, msg: 'user logged' }))
+    .then((user) => res.status(200).json({ user }))
     .catch((err) => res.status(500).json({ err }));
 }
 
-exports.editProfile = (req, res, next) => {
-  User.findByIdAndUpdate(req.user._id)
+exports.editProfile = async (req, res, next) => {
+  const { name, email, gender, phone, image } = req.body
+  const profile = await User.findByIdAndUpdate(req.params.id, { name, email, gender, phone, image })
     .then((profile) => res.status(200).json({ profile, msg: 'Profile edited' }))
     .catch((err) => res.status(500).json({ err }));
 }

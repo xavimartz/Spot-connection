@@ -11,8 +11,8 @@ router.post('/login', passport.authenticate('local'), login);
 
 router.get('/logout', logout);
 
-router.get('/profile/:id', showProfile);
+router.get('/profile/:id', isAuth, showProfile);
 
-router.post('/profile/edit/:id', uploadCloud.single('photoURL'), editProfile)
+router.put('/profile/edit/:id', isAuth, uploadCloud.single('photoURL'), editProfile)
 
 module.exports = router;

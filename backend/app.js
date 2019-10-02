@@ -10,8 +10,6 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('./config/passport');
 
-const mapRoutes = require('./routes/map')
-const authRoutes = require('./routes/auth')
 mongoose
   .connect(process.env.DB, {
     useNewUrlParser: true,
@@ -54,17 +52,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(logger('dev'));
 
-// const index = require('./routes/index');
-// const auth = require('./routes/auth');
-// const map = require('./routes/map');
-
-// app.use('/api/index', index);
-// app.use('/api/auth', auth);
-// app.use('/api/map', map);
 const index = require('./routes/index')
+const mapRoutes = require('./routes/map')
+const authRoutes = require('./routes/auth')
 app.use('/', index)
-app.use('/api/map', mapRoutes)
-app.use('/api/auth', authRoutes)
+app.use('/api', authRoutes, mapRoutes)
 // Uncomment this line for production
 // app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
 

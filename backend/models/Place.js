@@ -4,6 +4,7 @@ const placeSchema = new Schema(
   {
     suburb: String,
     delegation: String,
+    country: String,
     location: {
       address: {
         type: String,
@@ -11,7 +12,6 @@ const placeSchema = new Schema(
       },
       coordinates: [Number]
     },
-    images: [String],
     description: String,
     services: [String],
     rules: [String],
