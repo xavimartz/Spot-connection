@@ -12,26 +12,21 @@ export default class Login extends Component {
     e.preventDefault();
     MY_SERVICE.login(this.state.user)
       .then((response) => {
-        this.context.logUser(response.data.user);
-        console.lod(response.data.user)
-        this.props.history.push('/profile');
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        this.props.history.push(`/profile/${response.data.user._id}`);
+        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    MY_SERVICE.login(this.state.user)
-      .then((response) => {
-        this.context.logUser(response.data.user);
-        this.props.history.push('/profile');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  handleInput = (e) => {
+    const { user } = this.state
+    const key = e.target.name
+    user[key] = e.target.value
+    this.setState({ user })
+  }
 
   render() {
     return (
@@ -48,11 +43,11 @@ export default class Login extends Component {
           <Form onSubmit={this.onSubmit}>
 
             <Form.Item label="Email">
-              <Input name="email" type="email" onChange={this.handeleInput} />
+              <Input name="email" type="email" onChange={this.handleInput} />
             </Form.Item>
 
             <Form.Item label="Password">
-              <Input name="password" type="password" onChange={this.handeleInput} />
+              <Input name="password" type="password" onChange={this.handleInput} />
             </Form.Item>
 
             <Form.Item>

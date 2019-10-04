@@ -8,7 +8,7 @@ export default class Signup extends Component {
     user: {}
   }
 
-  handeleInput = (e) => {
+  handleInput = (e) => {
     const { user } = this.state
     const key = e.target.name
     user[key] = e.target.value
@@ -36,15 +36,15 @@ export default class Signup extends Component {
         <Card style={{ width: '50vw' }} title='Signup'>
           <Form onSubmit={this.onSubmit}>
             <Form.Item label="User name">
-              <Input name="name" type="text" onChange={this.handeleInput} />
+              <Input name="name" type="text" onChange={this.handleInput} />
             </Form.Item>
 
             <Form.Item label="Email">
-              <Input name="email" type="text" onChange={this.handeleInput} />
+              <Input name="email" type="text" onChange={this.handleInput} />
             </Form.Item>
 
             <Form.Item label="Password">
-              <Input name="password" type="password" onChange={this.handeleInput} />
+              <Input name="password" type="password" onChange={this.handleInput} />
             </Form.Item>
 
             <Form.Item>
