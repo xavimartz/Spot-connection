@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Form } from 'antd';
+import { Modal, Form, Button, Input } from 'antd';
 
 class ModalEdit extends Component {
   state = {
@@ -19,29 +19,36 @@ class ModalEdit extends Component {
   }
   render() {
     const { name, email, phone } = this.state.user
+    const { visible, handleCancel, handleInput } = this.props
     let { setUser } = this
     //const { getFieldDecorator } = this.props.form;
     return (
       <div>
         <Modal
           title="Edit Profile"
-          visible={this.props.visible}
+          visible={visible}
           footer={null}
+          header={null}
         >
-          <Form onSubmit={setUser} style={{
+          <Form onReset={handleCancel} onSubmit={setUser} style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-
-            <input name="name" onChange={this.props.handleInput} defaultValue={name}></input>
-
-            <input name="email" onChange={this.props.handleInput} defaultValue={email}></input>
-
-            <input type="number" min="0" name="phone" onChange={this.props.handleInput} defaultValue={phone}></input>
-
-            <button type="submit" >SAVE</button>
+            <Form.Item label="User name">
+              <Input name="name" onChange={handleInput} defaultValue={name}></Input>
+            </Form.Item>
+            <Form.Item label="Email">
+              <Input name="email" onChange={handleInput} defaultValue={email}></Input>
+            </Form.Item>
+            <Form.Item label="Phone number">
+              <Input type="number" min="0" name="phone" onChange={handleInput} defaultValue={phone}></Input>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" >SAVE</Button>
+              <Button htmlType="reset" >Cancel</Button>
+            </Form.Item>
           </Form>
         </Modal>
       </div>

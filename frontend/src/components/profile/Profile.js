@@ -27,18 +27,6 @@ export default class Profile extends Component {
 
 
   //-----------METODOS PARA MOSTRAR MODAL
-  handleOk = e => {
-    const { form } = this.formRef.props;
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-
-      console.log('Received values of form: ', values);
-      form.resetFields();
-      this.setState({ visible: false });
-    });
-  };
 
   handleCancel = e => {
     console.log(e);
@@ -56,15 +44,18 @@ export default class Profile extends Component {
 
   //---------Meotods para setear nuevos valores
   onSubmit = () => {
-
     let { user } = this.state
     console.log('entro', user)
-    editUser(user).then(res => {
-      console.log('paso', res)
-      this.setState({ visible: false })
-    }).catch((error) => {
-      console.log('tengo errr:', error);
-    })
+    editUser(user)
+      .then(res => {
+        console.log('paso', res)
+        this.setState({ visible: false })
+        const strUser = JSON.stringify(this.state.user)
+        localStorage.setItem('user', strUser)
+      })
+      .catch((error) => {
+        console.log('tengo errr:', error);
+      })
   }
 
   handleInput = (e) => {
@@ -107,7 +98,6 @@ export default class Profile extends Component {
             handleInput={this.handleInput}
             showModal={this.showModal} //revisar si funciona borrando esta linea
             visible={this.state.visible}
-            handleOk={this.handleOk}
             handleCancel={this.handleCancel}
           />
         </Card>
