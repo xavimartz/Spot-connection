@@ -3,22 +3,27 @@ const User = require('../models/User')
 
 exports.addPlace = async (req, res, next) => {
   const { lat, lng, suburb, delegation, country, address, description,
-    services,
-    rules,
-    ocupationDate,
-    evictionDate } = req.body
-  const location = { coordinates: [lat, lng] }
-  const n = { ...location, coordinates: [Number(location.coordinates[0]), Number(location.coordinates[1])] }
-
-  await Place.create({
+    services, rules, ocupationDate, evictionDate, id } = req.body
+  let place = {
     suburb, delegation, country, address, description,
-    services,
-    rules,
-    ocupationDate,
-    evictionDate, n
-  })
-    .then((place) => res.status(201).json({ place }))
-    .catch((err) => res.status(500).json({ err }));
+    services, rules, ocupationDate, evictionDate,
+    location: {
+      type: "Point",
+      coordinates: [lng, lat]
+    }
+  }
+  await Place.create(place)
+    .then((place) => {
+      console.log('entrooo', place)
+
+      const profile = User.findByIdAndUpdate(id, { $set: { homeLocation: place._id } }).then(res => console.log('que paso', res)).catch(err => console.log('daadadad', err))
+
+      return res.status(201).json({ place })
+    })
+    .catch((err) => {
+      console.log('el error', err)
+      return res.status(500).json({ err })
+    });
 }
 
 exports.showAllPlaces = (req, res) => {

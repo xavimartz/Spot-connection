@@ -5,9 +5,9 @@ const { addPlace, showAllPlaces, showPlace, editPlace, deletePlace } = require('
 
 router.get('/dashboard', isAuth, showAllPlaces)
 
-router.post('/place/new', isAuth, addPlace)
+router.post('/place/new', addPlace)
 
-router.get('/place/:id', isAuth, showPlace)
+router.get('/place/:id', showPlace)
 
 router.put('/place/edit/:id', isAuth, editPlace)
 

@@ -13,6 +13,6 @@ router.get('/logout', logout);
 
 router.get('/profile/:id', isAuth, showProfile);
 
-router.put('/profile/edit/:id', isAuth, uploadCloud.single('photoURL'), editProfile)
+router.put('/profile/:id', uploadCloud.single('photoURL'), editProfile)
 
 module.exports = router;

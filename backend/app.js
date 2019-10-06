@@ -56,7 +56,10 @@ const index = require('./routes/index')
 const mapRoutes = require('./routes/map')
 const authRoutes = require('./routes/auth')
 app.use('/', index)
-app.use('/api', authRoutes, mapRoutes)
+app.use('/api', authRoutes)
+app.use('/api/map', mapRoutes)
+
+
 // Uncomment this line for production
 // app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
 

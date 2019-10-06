@@ -5,11 +5,10 @@ const userSchema = new Schema(
   {
     name: String,
     email: String,
-    gender: {
-      type: String,
-      enum: ['Male', 'Female']
+    phone: {
+      type: Number,
+      default: ''
     },
-    phone: Number,
     image: {
       type: String,
       default: 'http://pluspng.com/img-png/png-user-icon-account-friend-human-man-member-person-profile-user-256.png'
