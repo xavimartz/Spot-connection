@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Card, Avatar, Descriptions } from 'antd';
 import Nav from '../home/Nav'
 import EditProfile from '../Modal/EditProfile'
+import ShowPlace from '../map/ShowPlace'
 import axios from 'axios'
 import { editUser } from '../../services/auth';
 
@@ -9,13 +10,21 @@ const { Meta } = Card
 
 export default class Profile extends Component {
   state = {
-    user: JSON.parse(localStorage.getItem('user')),
+    user: {},
     visible: false,
   }
 
-  //HELEPER PARA EL ESTADO DE LOGEO DEL USUARIO
+  //HELPER PARA EL ESTADO DE LOGEO DEL USUARIO
   componentDidMount() {
-    !this.state.user && this.props.history.push('/login')
+    //if (!this.context.state.loggedUser) return this.props.history.push('/login')
+    if (localStorage.user) {
+      let user = JSON.parse(localStorage.user)
+      this.setState({ user })
+
+    }
+    if (!localStorage.user) {
+      return this.props.history.push('/login')
+    }
   }
 
   logOut = async () => {
@@ -35,7 +44,7 @@ export default class Profile extends Component {
     });
   };
 
-  showModal = () => {
+  showEditProfile = () => {
     this.setState({
       visible: true,
     });
@@ -68,7 +77,6 @@ export default class Profile extends Component {
   //==================================================
 
   render() {
-
     let { name, email, phone, image } = this.state.user
     return (
       <div style={{
@@ -85,22 +93,20 @@ export default class Profile extends Component {
             title={name}
             description={
               <Descriptions>
-                <br />
-                <br />
                 <Descriptions.Item>Email: {email}</Descriptions.Item>
-                <Descriptions.Item>Telefono:{phone}</Descriptions.Item>
+                <Descriptions.Item>Telefono: {phone}</Descriptions.Item>
               </Descriptions>
             }
           />
-          <Button type="primary" onClick={this.showModal}>Edit Profile</Button>
+          <Button type="primary" onClick={this.showEditProfile}>Edit Profile</Button>
           <EditProfile
             onSubmit={this.onSubmit}
             handleInput={this.handleInput}
-            showModal={this.showModal} //revisar si funciona borrando esta linea
             visible={this.state.visible}
             handleCancel={this.handleCancel}
           />
         </Card>
+        <ShowPlace userID={this.props.match.params.id} />
       </div>
     );
   }

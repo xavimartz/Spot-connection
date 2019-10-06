@@ -37,13 +37,13 @@ class ModalEdit extends Component {
             justifyContent: 'center'
           }}>
             <Form.Item label="User name">
-              <Input name="name" onChange={handleInput} defaultValue={name}></Input>
+              <Input name="name" onChange={handleInput} defaultValue={name} />
             </Form.Item>
             <Form.Item label="Email">
-              <Input name="email" onChange={handleInput} defaultValue={email}></Input>
+              <Input name="email" onChange={handleInput} defaultValue={email} />
             </Form.Item>
             <Form.Item label="Phone number">
-              <Input type="number" min="0" name="phone" onChange={handleInput} defaultValue={phone}></Input>
+              <Input type="number" min="0" name="phone" onChange={handleInput} defaultValue={phone} />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" >SAVE</Button>

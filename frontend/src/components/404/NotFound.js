@@ -1,10 +1,14 @@
 import React from 'react';
+import { Result, Button } from 'antd';
 
 function NotFound() {
   return (
-    <div>
-      <h2>Not found</h2>
-    </div>
+    <Result
+      status="404"
+      title="404"
+      subTitle="Sorry, you are not authorized to access this page."
+      extra={<Button type="primary">Back Home</Button>}
+    />
   );
 }
 
