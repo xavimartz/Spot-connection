@@ -25,7 +25,7 @@ class ModalPlace extends Component {
 
 
   render() {
-    const { visible, handleCancel, handleInput, onChangeDate } = this.props
+    const { visible, onCancel, handleCancel, handleInput, onChangeDate } = this.props
     const { getFieldDecorator } = this.props.form;
     const rangeConfig = {
       rules: [{ type: 'array', required: true, message: 'Please select time!' }],
@@ -36,7 +36,8 @@ class ModalPlace extends Component {
           title="Set your place!"
           visible={visible}
           footer={null}
-          header={null}>
+          header={null}
+          onCancel={onCancel}>
           <Form onReset={handleCancel} onSubmit={this.handleDate}>
             <Form.Item label="Colonia">
               <Input name="suburb" onChange={handleInput} />
@@ -46,12 +47,6 @@ class ModalPlace extends Component {
             </Form.Item>
             <Form.Item label="Estado">
               <Input name="country" onChange={handleInput} />
-            </Form.Item>
-            <Form.Item label="Latitud">
-              <Input name="lat" onChange={handleInput} />
-            </Form.Item>
-            <Form.Item label="Longitud">
-              <Input name="lng" onChange={handleInput} />
             </Form.Item>
             <Form.Item label="Descrpición">
               <Input name="description" onChange={handleInput} />
@@ -70,8 +65,8 @@ class ModalPlace extends Component {
               <Button htmlType="reset" >Cancel</Button>
             </Form.Item>
           </Form>
-        </Modal>
-      </div>
+        </Modal >
+      </div >
     )
   }
 }

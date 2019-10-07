@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import FormPlace from '../Modal/FormPlace'
 import { Button, Card } from 'antd';
 import PLACE_SERVICE from '../../services/placeService'
+import moment from 'moment';
 
 export default class ShowPlace extends Component {
   state = {
@@ -9,13 +10,21 @@ export default class ShowPlace extends Component {
   }
 
   componentDidMount() {
-    const { place } = this.state
-    PLACE_SERVICE.showPlace(place)
+    const { userID } = this.props
+    PLACE_SERVICE.showPlace(userID)
       .then((res) => {
-        console.log('esta es mi respuesta', res)
-        this.setState(res)
+        if (res.data.place) {
+          this.setState({ place: res.data.place })
+        }
       })
       .catch((err) => console.log('este es mi error', err))
+  }
+
+  deletePlace = () => {
+    const { _id } = this.state.place
+    PLACE_SERVICE.deletePlaceService(_id)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
   }
 
   showModalPlace = () => {
@@ -31,13 +40,17 @@ export default class ShowPlace extends Component {
     });
   };
 
+  onCancel = e => {
+    this.setState({
+      visible: false
+    })
+  }
+
   onSubmit = () => {
     let { place } = this.state
     place['id'] = this.props.userID
-    console.log('entro el onSubmit', place)
     PLACE_SERVICE.addPlace(place)
       .then(res => {
-        console.log('paso agregar un lugar', res)
         this.setState({ visible: false })
       })
       .catch((error) => {
@@ -61,21 +74,34 @@ export default class ShowPlace extends Component {
   }
 
   render() {
-    let { suburb, delegation, country, address, description, services, rules, ocupationDate, evictionDate, location } = this.state.place
-
+    let { suburb, delegation, country, description, services, rules, ocupationDate, evictionDate, _id } = this.state.place
+    console.log(this.state);
     return (
       <div>
         <Card style={{ width: "70vw" }}>
-          <Button style={{ float: "right" }} type="primary" onClick={this.showModalPlace}>Add place</Button>
-          <p>{suburb} {delegation} {country} {address}</p>
-          <p>{description}</p>
-          <p>{services}</p>
-          <p>{rules}</p>
-          <p>{ocupationDate}</p>
-          <p>{evictionDate}</p>
-          <p>{location}</p>
+          {_id ?
+            <div>
+              <Button style={{ float: "right" }} type="primary" onClick={this.showModalPlace}>Edit Place</Button>
+              <Button style={{ float: "right" }} onClick={this.deletePlace}>Delete</Button>
+            </div> :
+            <Button style={{ float: "right" }} type="primary" onClick={this.showModalPlace}>Add place</Button>
+          }
+          <br />
+          <br />
+          <div>
+            <p>{suburb} {delegation} {country}</p>
+            <p>{description}</p>
+            <p>{services}</p>
+            <p>{rules}</p>
+            {
+              ocupationDate && evictionDate ?
+                (<p>{moment(ocupationDate).format('L')} - {moment(evictionDate).format('L')}</p>) :
+                (<p></p>)
+            }
+          </div>
         </Card>
         <FormPlace
+          onCancel={this.onCancel}
           onSubmit={this.onSubmit}
           handleInput={this.handleInput}
           visible={this.state.visible}

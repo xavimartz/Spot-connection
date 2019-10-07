@@ -9,3 +9,12 @@ export const editUser = (data) => {
       throw err
     })
 }
+
+export const showProfile = (id) => {
+
+  return axios.get(`${base_url}/profile/${id}`)
+    .then((response) => response.data)
+    .catch((err) => {
+      throw err
+    })
+}

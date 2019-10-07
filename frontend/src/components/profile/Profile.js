@@ -48,6 +48,12 @@ export default class Profile extends Component {
       visible: true,
     });
   };
+
+  onCancel = e => {
+    this.setState({
+      visible: false
+    })
+  }
   //=============================================
 
   //---------Meotods para setear nuevos valores
@@ -99,6 +105,7 @@ export default class Profile extends Component {
           />
           <Button type="primary" onClick={this.showEditProfile}>Edit Profile</Button>
           <EditProfile
+            onCancel={this.onCancel}
             onSubmit={this.onSubmit}
             handleInput={this.handleInput}
             visible={this.state.visible}

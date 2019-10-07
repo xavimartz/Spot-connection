@@ -19,7 +19,7 @@ class ModalEdit extends Component {
   }
   render() {
     const { name, email, phone } = this.state.user
-    const { visible, handleCancel, handleInput } = this.props
+    const { onCancel, visible, handleCancel, handleInput } = this.props
     let { setUser } = this
     //const { getFieldDecorator } = this.props.form;
     return (
@@ -29,6 +29,7 @@ class ModalEdit extends Component {
           visible={visible}
           footer={null}
           header={null}
+          onCancel={onCancel}
         >
           <Form onReset={handleCancel} onSubmit={setUser} style={{
             display: 'flex',

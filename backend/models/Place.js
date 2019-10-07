@@ -20,7 +20,11 @@ const placeSchema = new Schema(
     reviews: [{
       ref: 'Review',
       type: Schema.Types.ObjectId
-    }]
+    }],
+    owner: {
+      ref: "User",
+      type: Schema.Types.ObjectId
+    }
   },
   {
     timestamps: true,
