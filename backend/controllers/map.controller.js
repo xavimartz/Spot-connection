@@ -33,11 +33,10 @@ exports.showAllPlaces = (req, res) => {
 }
 
 exports.showPlace = (req, res) => {
-
   const { id } = req.params
-  const user = User.findById(id).populate('homeLocation')
-    //console.log(findPlace)
-    .then((user) => res.status(200).json({ user }))
+  console.log(req.params)
+  const user = User.findById(id).populate('Place')
+    .then((res) => res.status(200).json({ res }))
     .catch((err) => res.status(500).json({ err }));
 }
 

@@ -3,14 +3,14 @@ const router = express.Router();
 const isAuth = require('../middleware/isAuth')
 const { addPlace, showAllPlaces, showPlace, editPlace, deletePlace } = require('../controllers/map.controller')
 
-router.get('/dashboard', isAuth, showAllPlaces)
+router.get('/dashboard', showAllPlaces)
 
 router.post('/place/new', addPlace)
 
 router.get('/place/:id', showPlace)
 
-router.put('/place/edit/:id', isAuth, editPlace)
+router.put('/place/edit/:id', editPlace)
 
-router.delete('/place/delete/:id', isAuth, deletePlace)
+router.delete('/place/delete/:id', deletePlace)
 
 module.exports = router
