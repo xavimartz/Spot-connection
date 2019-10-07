@@ -16,7 +16,6 @@ export default class Profile extends Component {
 
   //HELPER PARA EL ESTADO DE LOGEO DEL USUARIO
   componentDidMount() {
-    //if (!this.context.state.loggedUser) return this.props.history.push('/login')
     if (localStorage.user) {
       let user = JSON.parse(localStorage.user)
       this.setState({ user })

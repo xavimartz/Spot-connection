@@ -4,8 +4,8 @@ import axios from 'axios'
 const SERVICE = axios.create({ withCredentials: true, map_url });
 
 const PLACE_SERVICE = {
-  showPlace: async (place) => {
-    return await SERVICE.get(`${map_url}/place/${place}._id`, place)
+  showPlace: async (data) => {
+    return await SERVICE.get(`${map_url}/place/${data._id}`, data)
   },
 
   addPlace: async (place) => {

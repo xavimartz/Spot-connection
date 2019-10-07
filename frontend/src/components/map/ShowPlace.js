@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
 import FormPlace from '../Modal/FormPlace'
 import { Button, Card } from 'antd';
-import PLACE_SERVICE from '../../services/place'
+import PLACE_SERVICE from '../../services/placeService'
 
 export default class ShowPlace extends Component {
   state = {
     place: {}
   }
 
-  expectedPlace = () => {
+  componentDidMount() {
     const { place } = this.state
     PLACE_SERVICE.showPlace(place)
-      .then((res) => this.setState(res))
-      .catch((err) => console.log(err))
+      .then((res) => {
+        console.log('esta es mi respuesta', res)
+        this.setState(res)
+      })
+      .catch((err) => console.log('este es mi error', err))
   }
 
   showModalPlace = () => {
