@@ -8,28 +8,38 @@ class ModalPlace extends Component {
   //Datpicker and timepicker methods
 
 
-  handleDate = (e) => {
+  handleSubmit = (e, action) => {
+    const { onSubmit, form: { resetFields, validateFields } } = this.props
     e.preventDefault()
-    this.props.form.validateFields((err, fieldsValue) => {
-      if (err) return err
-      //fromato de la fecha para antes de enviar
+
+    return validateFields((err, fieldsValue) => {
       const rangeValue = fieldsValue['range-picker']
-      const values = {
+      const submitValues = {
         ...fieldsValue,
-        'range-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')]
+        ocupationDate: rangeValue[0].format('YYYY-MM-DD'),
+        evictionDate: rangeValue[1].format('YYYY-MM-DD')
       }
-      console.log('Valores recibidos del form: ', values);
-      this.props.onSubmit()
+      delete submitValues['range-picker']
+
+      console.log(submitValues)
+      if (action === 'add') onSubmit(submitValues, resetFields)
+      else
+        this.props.onEdit(submitValues)
     })
   }
 
+  getInitialValue(fieldName) {
+    const { stateValues } = this.props
+    return stateValues[fieldName] ? stateValues[fieldName] : ''
+  }
 
   render() {
-    const { visible, onCancel, handleCancel, handleInput, onChangeDate } = this.props
+    const { visible, onCancel, isEditing } = this.props
     const { getFieldDecorator } = this.props.form;
     const rangeConfig = {
-      rules: [{ type: 'array', required: true, message: 'Please select time!' }],
+      rules: [{ type: 'array', required: true, message: 'Selecciona una fecha!' }],
     }
+
     return (
       <div>
         <Modal
@@ -38,31 +48,37 @@ class ModalPlace extends Component {
           footer={null}
           header={null}
           onCancel={onCancel}>
-          <Form onReset={handleCancel} onSubmit={this.handleDate}>
+          <Form>
             <Form.Item label="Colonia">
-              <Input name="suburb" onChange={handleInput} />
+              {getFieldDecorator('suburb', { initialValue: this.getInitialValue('suburb') })(<Input name="suburb" />)}
             </Form.Item>
             <Form.Item label="Delegacion">
-              <Input name="delegation" onChange={handleInput} />
+              {getFieldDecorator('delegation', { initialValue: this.getInitialValue('delegation') })(<Input name="delegation" />)}
             </Form.Item>
             <Form.Item label="Estado">
-              <Input name="country" onChange={handleInput} />
+              {getFieldDecorator('country', { initialValue: this.getInitialValue('country') })(<Input name="country" />)}
             </Form.Item>
             <Form.Item label="Descrpición">
-              <Input name="description" onChange={handleInput} />
+              {getFieldDecorator('description', { initialValue: this.getInitialValue('description') })(<Input name="description" />)}
             </Form.Item>
             <Form.Item label="Servicios">
-              <Input name="services" onChange={handleInput} />
+              {getFieldDecorator('services', { initialValue: this.getInitialValue('services') })(<Input name="services" />)}
             </Form.Item>
             <Form.Item label="Reglamento">
-              <Input name="rules" onChange={handleInput} />
+              {
+                getFieldDecorator('rules', { initialValue: this.getInitialValue('rules') })(<Input name="rules" />)
+              }
             </Form.Item>
             <Form.Item label="Fechas de ocupacion y desalojo">
-              {getFieldDecorator('range-picker', rangeConfig)(<RangePicker onChange={onChangeDate} />)}
+              {getFieldDecorator('range-picker', rangeConfig)(<RangePicker />)}
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" >SAVE</Button>
-              <Button htmlType="reset" >Cancel</Button>
+              {!isEditing ?
+                <Button type="primary" onClick={(e) => this.handleSubmit(e, 'add')} >SAVE</Button>
+                :
+                <Button type="primary" onClick={(e) => this.handleSubmit(e, 'edit')} >Edit</Button>
+              }
+              <Button onClick={onCancel} >Cancel</Button>
             </Form.Item>
           </Form>
         </Modal >

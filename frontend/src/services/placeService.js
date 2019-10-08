@@ -12,8 +12,8 @@ const PLACE_SERVICE = {
     return await SERVICE.post(`${map_url}/place/new`, place)
   },
 
-  editePlaceService: async (id) => {
-    return await SERVICE.put(`${map_url}/place/edit/${id}`)
+  editePlace: async (data) => {
+    return await SERVICE.put(`${map_url}/place/edit/${data._id}`, data)
   },
 
   deletePlaceService: async (id) => {

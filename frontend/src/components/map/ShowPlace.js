@@ -6,37 +6,41 @@ import moment from 'moment';
 
 export default class ShowPlace extends Component {
   state = {
-    place: {}
+    place: {},
+    isEditing: false,
   }
 
   componentDidMount() {
     const { userID } = this.props
+    console.log('estado previo', this.state.place)
     PLACE_SERVICE.showPlace(userID)
       .then((res) => {
         if (res.data.place) {
+          console.log(typeof res.data.place)
           this.setState({ place: res.data.place })
+          console.log('estado nuevo??', this.state.place)
         }
       })
       .catch((err) => console.log('este es mi error', err))
   }
 
   deletePlace = () => {
+    console.log('estado previo a borrar', this.state.place)
     const { _id } = this.state.place
     PLACE_SERVICE.deletePlaceService(_id)
-      .then((res) => console.log(res))
+      .then((res) => {
+        this.setState({
+          place: {}
+        })
+        console.log(res)
+      })
       .catch((err) => console.log(err))
   }
 
-  showModalPlace = () => {
+  showModalPlace = (action) => {
     this.setState({
+      isEditing: action === 'edit',
       visible: true,
-    });
-  };
-
-  handleCancel = e => {
-    console.log(e);
-    this.setState({
-      visible: false,
     });
   };
 
@@ -46,45 +50,48 @@ export default class ShowPlace extends Component {
     })
   }
 
-  onSubmit = () => {
-    let { place } = this.state
-    place['id'] = this.props.userID
-    PLACE_SERVICE.addPlace(place)
+  onSubmit = (values, resetFields) => {
+    console.log(this.props)
+    values['id'] = this.props.userID
+    PLACE_SERVICE.addPlace(values)
       .then(res => {
-        this.setState({ visible: false })
+        this.setState({
+          visible: false,
+          place: res.data.place
+        })
+        console.log('Added place', res)
+        return resetFields();
       })
       .catch((error) => {
         console.log('tengo errr:', error);
       })
   }
 
-  handleInput = (e) => {
-    const { place } = this.state
-    const key = e.target.name
-    place[key] = e.target.value
-    this.setState({ place })
-    console.log(place)
-  }
-  onChangeDate = (date, dateString) => {
-    const { place } = this.state
-    place['ocupationDate'] = dateString[0]
-    place['evictionDate'] = dateString[1]
-    this.setState({ place })
-    console.log(dateString);
+  onEdit = () => {
+    const { _id } = this.state.place
+    PLACE_SERVICE.editePlace(_id)
+      .then(res => {
+        this.setState({
+          visible: false,
+          place: res.data.place
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   render() {
-    let { suburb, delegation, country, description, services, rules, ocupationDate, evictionDate, _id } = this.state.place
-    console.log(this.state);
+    let { suburb, delegation, country, description, services, rules, ocupationDate, evictionDate } = this.state.place
     return (
       <div>
         <Card style={{ width: "70vw" }}>
-          {_id ?
+          {suburb ?
             <div>
-              <Button style={{ float: "right" }} type="primary" onClick={this.showModalPlace}>Edit Place</Button>
+              <Button style={{ float: "right" }} type="primary" onClick={() => this.showModalPlace('edit')}>Edit Place</Button>
               <Button style={{ float: "right" }} onClick={this.deletePlace}>Delete</Button>
             </div> :
-            <Button style={{ float: "right" }} type="primary" onClick={this.showModalPlace}>Add place</Button>
+            <Button style={{ float: "right" }} type="primary" onClick={() => this.showModalPlace('add')}>Add place</Button>
           }
           <br />
           <br />
@@ -101,12 +108,13 @@ export default class ShowPlace extends Component {
           </div>
         </Card>
         <FormPlace
+          visible={this.state.visible}
+          isEditing={this.state.isEditing}
+          stateValues={this.state.place}
           onCancel={this.onCancel}
           onSubmit={this.onSubmit}
-          handleInput={this.handleInput}
-          visible={this.state.visible}
-          handleCancel={this.handleCancel}
-          onChangeDate={this.onChangeDate} />
+          onEdit={this.onEdit}
+        />
       </div>
     )
   }

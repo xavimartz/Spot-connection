@@ -17,6 +17,7 @@ class ModalEdit extends Component {
       }
     });
   }
+
   render() {
     const { name, email, phone } = this.state.user
     const { onCancel, visible, handleCancel, handleInput } = this.props
