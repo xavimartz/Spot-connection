@@ -3,7 +3,6 @@ import { Button, Card, Avatar, Descriptions } from 'antd';
 import Nav from '../home/Nav'
 import EditProfile from '../Modal/EditProfile'
 import ShowPlace from '../map/ShowPlace'
-import axios from 'axios'
 import { editUser } from '../../services/auth';
 
 const { Meta } = Card
@@ -24,12 +23,6 @@ export default class Profile extends Component {
     if (!localStorage.user) {
       return this.props.history.push('/login')
     }
-  }
-
-  logOut = async () => {
-    await axios.get('http://localhost:3000/api/logout')
-    localStorage.removeItem('user')
-    this.props.history.push('/login')
   }
   //===============================================
 
@@ -91,7 +84,7 @@ export default class Profile extends Component {
         width: '100vw',
         height: '100vh'
       }}>
-        <Nav logOut={this.logOut}></Nav>
+        <Nav history={this.props.history} />
         <Card style={{ width: "70vw" }}>
           <Meta
             avatar={<Avatar size={130} src={image} />}

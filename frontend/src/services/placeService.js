@@ -4,6 +4,10 @@ import axios from 'axios'
 const SERVICE = axios.create({ withCredentials: true, map_url });
 
 const PLACE_SERVICE = {
+  showAllPlace: async (id) => {
+    return await SERVICE.get(`${map_url}/dashboard`)
+  },
+
   showPlace: async (id) => {
     return await SERVICE.get(`${map_url}/place/${id}`)
   },
@@ -13,6 +17,7 @@ const PLACE_SERVICE = {
   },
 
   editePlace: async (data) => {
+    console.log('paso el servicio edit??', data, data._id);
     return await SERVICE.put(`${map_url}/place/edit/${data._id}`, data)
   },
 

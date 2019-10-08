@@ -23,8 +23,10 @@ class ModalPlace extends Component {
 
       console.log(submitValues)
       if (action === 'add') onSubmit(submitValues, resetFields)
-      else
+      else {
+        console.log('paso a funcion edit en el sumbit??', submitValues);
         this.props.onEdit(submitValues)
+      }
     })
   }
 
@@ -59,7 +61,7 @@ class ModalPlace extends Component {
               {getFieldDecorator('country', { initialValue: this.getInitialValue('country') })(<Input name="country" />)}
             </Form.Item>
             <Form.Item label="Descrpición">
-              {getFieldDecorator('description', { initialValue: this.getInitialValue('description') })(<Input name="description" />)}
+              {getFieldDecorator('description', { initialValue: this.getInitialValue('description') })(<Input.TextArea name="description" />)}
             </Form.Item>
             <Form.Item label="Servicios">
               {getFieldDecorator('services', { initialValue: this.getInitialValue('services') })(<Input name="services" />)}

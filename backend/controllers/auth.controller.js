@@ -26,6 +26,6 @@ exports.showProfile = (req, res, next) => {
 exports.editProfile = async (req, res, next) => {
   const { name, email, gender, phone, image } = req.body
   const profile = await User.findByIdAndUpdate(req.params.id, { name, email, gender, phone, image })
-    .then((profile) => res.status(200).json({ profile, msg: 'Profile edited' }))
+    .then((data) => res.status(200).json({ data, msg: 'Profile edited' }))
     .catch((err) => res.status(500).json({ err }));
 }

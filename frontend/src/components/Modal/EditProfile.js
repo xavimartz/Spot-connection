@@ -45,7 +45,7 @@ class ModalEdit extends Component {
               <Input name="email" onChange={handleInput} defaultValue={email} />
             </Form.Item>
             <Form.Item label="Phone number">
-              <Input type="number" min="0" name="phone" onChange={handleInput} defaultValue={phone} />
+              <Input type="number" min={0} maxLength={10} name="phone" onChange={handleInput} defaultValue={phone} />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" >SAVE</Button>

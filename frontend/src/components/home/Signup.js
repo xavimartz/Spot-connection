@@ -44,7 +44,7 @@ export default class Signup extends Component {
             </Form.Item>
 
             <Form.Item label="Password">
-              <Input name="password" type="password" onChange={this.handleInput} />
+              <Input.Password name="password" type="password" onChange={this.handleInput} />
             </Form.Item>
 
             <Form.Item>

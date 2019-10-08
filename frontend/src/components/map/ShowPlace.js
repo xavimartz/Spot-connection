@@ -24,18 +24,6 @@ export default class ShowPlace extends Component {
       .catch((err) => console.log('este es mi error', err))
   }
 
-  deletePlace = () => {
-    console.log('estado previo a borrar', this.state.place)
-    const { _id } = this.state.place
-    PLACE_SERVICE.deletePlaceService(_id)
-      .then((res) => {
-        this.setState({
-          place: {}
-        })
-        console.log(res)
-      })
-      .catch((err) => console.log(err))
-  }
 
   showModalPlace = (action) => {
     this.setState({
@@ -68,9 +56,12 @@ export default class ShowPlace extends Component {
   }
 
   onEdit = () => {
-    const { _id } = this.state.place
-    PLACE_SERVICE.editePlace(_id)
+    console.log('valores previos del edit', this.state.place)
+    const { place } = this.state
+
+    PLACE_SERVICE.editePlace(place)
       .then(res => {
+        console.log('paso el edit?', res, this.setState.place)
         this.setState({
           visible: false,
           place: res.data.place
@@ -81,8 +72,22 @@ export default class ShowPlace extends Component {
       })
   }
 
+  deletePlace = () => {
+    const { _id } = this.state.place
+    PLACE_SERVICE.deletePlaceService(_id)
+      .then((res) => {
+        this.setState({
+          place: {}
+        })
+        console.log(res)
+      })
+      .catch((err) => console.log(err))
+  }
+
   render() {
+    console.log('<<<<<<<<<', this.state.place)
     let { suburb, delegation, country, description, services, rules, ocupationDate, evictionDate } = this.state.place
+    console.log('>>>>>>>>>', this.setState.place)
     return (
       <div>
         <Card style={{ width: "70vw" }}>
@@ -96,13 +101,13 @@ export default class ShowPlace extends Component {
           <br />
           <br />
           <div>
-            <p>{suburb} {delegation} {country}</p>
-            <p>{description}</p>
-            <p>{services}</p>
-            <p>{rules}</p>
+            <p>Dirección: {suburb}, {delegation}, {country}</p>
+            <p>Descripción: {description}</p>
+            <p>Serviciós: {services}</p>
+            <p>Reglamento: {rules}</p>
             {
               ocupationDate && evictionDate ?
-                (<p>{moment(ocupationDate).format('L')} - {moment(evictionDate).format('L')}</p>) :
+                (<p>Fecha de alojo: {moment(ocupationDate).format('L')} || Fecha de desalojo: {moment(evictionDate).format('L')}</p>) :
                 (<p></p>)
             }
           </div>
