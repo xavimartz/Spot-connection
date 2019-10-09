@@ -1,9 +1,10 @@
 const Application = require('../models/Application')
 
-exports.showApplicantions = (req, res) => {
+exports.showApplication = async (req, res) => {
   const { id } = req.params
-  Application.find({ apliccantId: id })
+  await Application.find({ applicantId: id })
     .then((response) => {
+      console.log(response)
       res.status(201).json(response)
     })
     .catch((err) => res.status(500).json({ err }));
@@ -11,7 +12,7 @@ exports.showApplicantions = (req, res) => {
 
 exports.showRequest = (req, res) => {
   const { id } = req.params
-  Application.find({ ownerId: id })
+  Application.find({ ownId: id })
     .then((data) => res.status(201).json(data))
     .catch((err) => res.status(500).json({ err }));
 }

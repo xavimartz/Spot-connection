@@ -4,6 +4,8 @@ import Nav from '../home/Nav'
 import EditProfile from '../Modal/EditProfile'
 import ShowPlace from '../map/ShowPlace'
 import { editUser } from '../../services/auth';
+import Application from '../application/Application';
+import Request from '../application/Request';
 
 const { Meta } = Card
 
@@ -52,7 +54,6 @@ export default class Profile extends Component {
   //---------Meotods para setear nuevos valores
   onSubmit = () => {
     let { user } = this.state
-    console.log('entro', user)
     editUser(user)
       .then(res => {
         console.log('paso', res)
@@ -106,6 +107,10 @@ export default class Profile extends Component {
           />
         </Card>
         <ShowPlace userID={this.props.match.params.id} />
+        <div style={{ display: 'flex', flexWrap: 'wrap', width: '70vw' }}>
+          <Application width="50vw" userID={this.props.match.params.id} />
+          <Request width="50vw" userID={this.props.match.params.id} />
+        </div>
       </div>
     );
   }

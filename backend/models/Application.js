@@ -2,8 +2,8 @@ const { Schema, model } = require('mongoose')
 
 const applicationSchema = new Schema(
   {
-    ownerId: String,
-    apliccantId: String,
+    ownId: String,
+    applicantId: String,
     address: {
       suburb: String,
       delegation: String,

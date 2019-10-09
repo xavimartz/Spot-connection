@@ -39,7 +39,6 @@ export default class ShowPlace extends Component {
   }
 
   onSubmit = (values, resetFields) => {
-    console.log(this.props)
     values['id'] = this.props.userID
     PLACE_SERVICE.addPlace(values)
       .then(res => {
@@ -47,7 +46,6 @@ export default class ShowPlace extends Component {
           visible: false,
           place: res.data.place
         })
-        console.log('Added place', res)
         return resetFields();
       })
       .catch((error) => {
@@ -92,7 +90,10 @@ export default class ShowPlace extends Component {
               <Button style={{ float: "right" }} type="primary" onClick={() => this.showModalPlace('edit')}>Edit Place</Button>
               <Button style={{ float: "right" }} onClick={this.deletePlace}>Delete</Button>
             </div> :
-            <Button style={{ float: "right" }} type="primary" onClick={() => this.showModalPlace('add')}>Add place</Button>
+            <div>
+              <Button style={{ float: "right" }} type="primary" onClick={() => this.showModalPlace('add')}>Add place</Button>
+              <h1>Agrega la ubicacion de tu departamento</h1>
+            </div>
           }
           <br />
           <br />

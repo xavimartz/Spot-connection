@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PLACE_SERVICE from '../../services/placeService'
+import { createApplication } from '../../services/applicationService'
 import Nav from '../home/Nav'
-import { Card, Row, Col } from 'antd'
+import { Card, Row, Col, Button } from 'antd'
 import moment from 'moment'
 
 export default class Dashboard extends Component {
@@ -61,10 +62,18 @@ export default class Dashboard extends Component {
                           <div><p>Fecha de alojo: <b >{moment(place.ocupationDate).format('L')}</b></p></div>
                           <div><p>Fecha de desalojo <b >{moment(place.evictionDate).format('L')}</b></p></div>
                         </div>
-
                         ) :
                         (<p></p>)
                     }
+                    <Button onClick={() =>
+                      createApplication(
+                        {
+                          address: { suburb: place.suburb, delegation: place.delegation, country: place.country },
+                          ownId: JSON.parse(localStorage.getItem('user'))._id,
+                          applicantId: place.owner._id
+                        }
+                      )
+                    }> Apply </Button>
                   </div>
                 </Card>
               </Col>

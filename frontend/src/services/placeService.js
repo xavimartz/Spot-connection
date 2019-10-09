@@ -4,7 +4,7 @@ import axios from 'axios'
 const SERVICE = axios.create({ withCredentials: true, map_url });
 
 const PLACE_SERVICE = {
-  showAllPlace: async (id) => {
+  showAllPlace: async () => {
     return await SERVICE.get(`${map_url}/dashboard`)
   },
 
