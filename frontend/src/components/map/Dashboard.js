@@ -51,15 +51,18 @@ export default class Dashboard extends Component {
               <Col key={place._id} xs={24} md={12} lg={8}>
                 <Card title={place.owner.name}>
                   <div>
-                    <p>{place.suburb}</p>
-                    <p>{place.delegation}</p>
-                    <p>{place.country}</p>
-                    <p>{place.description}</p>
-                    <p>{place.services}</p>
-                    <p>{place.rules}</p>
+                    <p>Direccion: {place.suburb}, {place.delegation}, {place.country}</p>
+                    <p>Descripcion: {place.description}</p>
+                    <p>Servicios: {place.services}</p>
+                    <p>Servicios: {place.rules}</p>
                     {
                       place.ocupationDate && place.evictionDate ?
-                        (<p><b >{moment(place.ocupationDate).format('L')}</b> - <b >{moment(place.evictionDate).format('L')}</b></p>) :
+                        (<div>
+                          <div><p>Fecha de alojo: <b >{moment(place.ocupationDate).format('L')}</b></p></div>
+                          <div><p>Fecha de desalojo <b >{moment(place.evictionDate).format('L')}</b></p></div>
+                        </div>
+
+                        ) :
                         (<p></p>)
                     }
                   </div>

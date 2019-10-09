@@ -51,10 +51,9 @@ exports.editPlace = async (req, res, next) => {
     // }
   };
   console.log('llegan bien los valores del nuevo place', place)
-  const modPlace = await Place.findByIdAndUpdate(req.params.id, place)
-    .then((place) => {
-      console.log('realmente paso el update??')
-      res.status(200).json({ place, msg: 'Place edited' })
+  const modPlace = await Place.findByIdAndUpdate(req.params.id, place, { new: true })
+    .then((updatedPlace) => {
+      res.status(200).json({ place: updatedPlace, msg: 'Place edited' })
     })
     .catch((err) => {
       console.log('gimme the error', err);

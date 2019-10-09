@@ -55,13 +55,11 @@ export default class ShowPlace extends Component {
       })
   }
 
-  onEdit = () => {
-    console.log('valores previos del edit', this.state.place)
-    const { place } = this.state
-
-    PLACE_SERVICE.editePlace(place)
+  onEdit = (formValues) => {
+    formValues['_id'] = this.state.place._id
+    PLACE_SERVICE.editePlace(formValues)
       .then(res => {
-        console.log('paso el edit?', res, this.setState.place)
+        console.log('ON_EDIT_RESPONSE', res)
         this.setState({
           visible: false,
           place: res.data.place
@@ -85,9 +83,7 @@ export default class ShowPlace extends Component {
   }
 
   render() {
-    console.log('<<<<<<<<<', this.state.place)
     let { suburb, delegation, country, description, services, rules, ocupationDate, evictionDate } = this.state.place
-    console.log('>>>>>>>>>', this.setState.place)
     return (
       <div>
         <Card style={{ width: "70vw" }}>
@@ -100,17 +96,17 @@ export default class ShowPlace extends Component {
           }
           <br />
           <br />
-          <div>
-            <p>Dirección: {suburb}, {delegation}, {country}</p>
-            <p>Descripción: {description}</p>
-            <p>Serviciós: {services}</p>
-            <p>Reglamento: {rules}</p>
-            {
-              ocupationDate && evictionDate ?
-                (<p>Fecha de alojo: {moment(ocupationDate).format('L')} || Fecha de desalojo: {moment(evictionDate).format('L')}</p>) :
-                (<p></p>)
-            }
-          </div>
+          {
+            ocupationDate && evictionDate ?
+              (<div>
+                <p>Dirección: {suburb}, {delegation}, {country}</p>
+                <p>Descripción: {description}</p>
+                <p>Serviciós: {services}</p>
+                <p>Reglamento: {rules}</p>
+                <p>Fecha de alojo: {moment(ocupationDate).format('L')} || Fecha de desalojo: {moment(evictionDate).format('L')}</p>
+              </div>) :
+              (<p></p>)
+          }
         </Card>
         <FormPlace
           visible={this.state.visible}
