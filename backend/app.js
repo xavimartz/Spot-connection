@@ -55,9 +55,11 @@ app.use(logger('dev'));
 const index = require('./routes/index')
 const mapRoutes = require('./routes/map')
 const authRoutes = require('./routes/auth')
+const applicationRoutes = require('./routes/application')
 app.use('/', index)
 app.use('/api', authRoutes)
 app.use('/api/map', mapRoutes)
+app.use('/api/petition', applicationRoutes)
 
 
 // Uncomment this line for production

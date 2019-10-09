@@ -17,10 +17,10 @@ const placeSchema = new Schema(
     rules: [String],
     ocupationDate: Date,
     evictionDate: Date,
-    reviews: [{
-      ref: 'Review',
-      type: Schema.Types.ObjectId
-    }],
+    // reviews: [{
+    //   ref: 'Review',
+    //   type: Schema.Types.ObjectId
+    // }],
     owner: {
       ref: "User",
       type: Schema.Types.ObjectId

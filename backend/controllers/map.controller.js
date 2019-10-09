@@ -50,7 +50,6 @@ exports.editPlace = async (req, res, next) => {
     //   coordinates: [lng, lat]
     // }
   };
-  console.log('llegan bien los valores del nuevo place', place)
   const modPlace = await Place.findByIdAndUpdate(req.params.id, place, { new: true })
     .then((updatedPlace) => {
       res.status(200).json({ place: updatedPlace, msg: 'Place edited' })
