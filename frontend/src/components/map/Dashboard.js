@@ -70,7 +70,9 @@ export default class Dashboard extends Component {
                         {
                           address: { suburb: place.suburb, delegation: place.delegation, country: place.country },
                           ownId: JSON.parse(localStorage.getItem('user'))._id,
-                          applicantId: place.owner._id
+                          applicantId: place.owner._id,
+                          ownerName: place.owner.name,
+                          applicantName: this.state.user.name
                         }
                       )
                     }> Apply </Button>

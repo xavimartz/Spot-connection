@@ -24,7 +24,7 @@ export default class Application extends Component {
         <Card>
           Mis solicitudes de intercambio
           {applicants.map((applicant) => (
-            <Card key={applicant._id}>
+            <Card title={applicant.applicantName} key={applicant._id}>
               <p>Direccion: {applicant.address.suburb}, {applicant.address.delegation}, {applicant.address.country}</p>
               <p>Status: <b>{applicant.status}</b></p>
               <Button.Group>

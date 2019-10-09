@@ -23,7 +23,7 @@ export default class Request extends Component {
         <Card>
           Pendientes para intercambio
           {requests.map((request) => (
-            <Card key={request._id}>
+            <Card title={request.ownerName} key={request._id}>
               <p>Direccion: {request.address.suburb}, {request.address.delegation}, {request.address.country}</p>
               <p>Status: <b>{request.status}</b></p>
             </Card>
