@@ -22,10 +22,10 @@ export default class Application extends Component {
     return (
       <div>
         <Card>
-          Mis pendientes
+          Mis solicitudes de intercambio
           {applicants.map((applicant) => (
             <Card key={applicant._id}>
-              <p>{applicant.address.suburb}{applicant.address.delegation}{applicant.address.country}</p>
+              <p>Direccion: {applicant.address.suburb}, {applicant.address.delegation}, {applicant.address.country}</p>
               <p>Status: <b>{applicant.status}</b></p>
               <Button.Group>
                 <Button size="small" icon="check" type="primary" onClick={() =>

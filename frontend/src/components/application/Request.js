@@ -21,7 +21,7 @@ export default class Request extends Component {
     return (
       <div>
         <Card>
-          Mis solicitudes
+          Pendientes para intercambio
           {requests.map((request) => (
             <Card key={request._id}>
               <p>Direccion: {request.address.suburb}, {request.address.delegation}, {request.address.country}</p>
