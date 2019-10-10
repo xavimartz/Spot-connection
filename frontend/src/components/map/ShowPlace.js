@@ -84,7 +84,7 @@ export default class ShowPlace extends Component {
     let { suburb, delegation, country, description, services, rules, ocupationDate, evictionDate } = this.state.place
     return (
       <div>
-        <Card style={{ width: "70vw" }}>
+        <Card>
           {suburb ?
             <div>
               <Button style={{ float: "right" }} type="primary" onClick={() => this.showModalPlace('edit')}>Edit Place</Button>

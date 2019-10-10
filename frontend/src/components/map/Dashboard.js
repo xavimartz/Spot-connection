@@ -40,6 +40,7 @@ export default class Dashboard extends Component {
         <Nav history={this.props.history} />
         <div
           style={{
+            marginTop: '2rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-evenly',

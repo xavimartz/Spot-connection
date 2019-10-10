@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Avatar, Descriptions } from 'antd';
+import { Button, Card, Avatar, Descriptions, Row, Col } from 'antd';
 import Nav from '../home/Nav'
 import EditProfile from '../Modal/EditProfile'
 import ShowPlace from '../map/ShowPlace'
@@ -31,8 +31,7 @@ export default class Profile extends Component {
 
   //-----------METODOS PARA MOSTRAR MODAL
 
-  handleCancel = e => {
-    console.log(e);
+  handleCancel = () => {
     this.setState({
       visible: false,
     });
@@ -82,36 +81,43 @@ export default class Profile extends Component {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        width: '100vw',
-        height: '100vh'
+        width: '100vw'
       }}>
         <Nav history={this.props.history} />
-        <Card style={{ width: "70vw" }}>
-          <Meta
-            avatar={<Avatar size={130} src={image} />}
-            title={name}
-            description={
-              <Descriptions>
-                <Descriptions.Item>Email: {email}</Descriptions.Item>
-                <Descriptions.Item>Telefono: {phone}</Descriptions.Item>
-              </Descriptions>
-            }
-          />
-          <Button type="primary" onClick={this.showEditProfile}>Edit Profile</Button>
-          <EditProfile
-            onCancel={this.onCancel}
-            onSubmit={this.onSubmit}
-            handleInput={this.handleInput}
-            visible={this.state.visible}
-            handleCancel={this.handleCancel}
-          />
-        </Card>
-        <ShowPlace userID={this.props.match.params.id} />
-        <div style={{ display: 'flex', flexWrap: 'wrap', width: '70vw' }}>
-          <Application width="50vw" userID={this.props.match.params.id} />
-          <Request width="50vw" userID={this.props.match.params.id} />
-        </div>
-      </div>
+        <Row type="flex" justify="center">
+          <Col span={20} >
+            <Card>
+              <Meta
+                avatar={<Avatar size={130} src={image} />}
+                title={name}
+                description={
+                  <Descriptions>
+                    <Descriptions.Item>Email: {email}</Descriptions.Item>
+                    <Descriptions.Item>Telefono: {phone}</Descriptions.Item>
+                  </Descriptions>
+                }
+              />
+              <Button type="primary" onClick={this.showEditProfile}>Edit Profile</Button>
+              <EditProfile
+                onCancel={this.onCancel}
+                onSubmit={this.onSubmit}
+                handleInput={this.handleInput}
+                visible={this.state.visible}
+                handleCancel={this.handleCancel}
+              />
+            </Card>
+          </Col>
+          <Col span={20}>
+            <ShowPlace userID={this.props.match.params.id} />
+          </Col>
+          <Col xs={20} md={10} lg={10}>
+            <Application userID={this.props.match.params.id} />
+          </Col>
+          <Col xs={20} md={10} lg={10}>
+            <Request userID={this.props.match.params.id} />
+          </Col>
+        </Row>
+      </div >
     );
   }
 }
